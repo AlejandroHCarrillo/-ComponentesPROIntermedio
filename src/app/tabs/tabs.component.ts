@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ContentChild, AfterContentInit, OnDestroy } from '@angular/core';
 import { TabComponent } from "app/tab/tab.component";
 import { Tab } from "../tab/tab.interface";
 
@@ -8,15 +8,25 @@ import { Tab } from "../tab/tab.interface";
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.scss']
 })
-export class TabsComponent implements OnInit {
+export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
+
+  @ContentChild(TabComponent) tab : TabComponent;
+
 
   public tabs:Tab[] = [];
+  private tabClickSubscription : any;
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  ngOnDestroy(): void {
+    if (this.tabClickSubscription){
+      this.tabClickSubscription.unsubscribe();
+    }
+  }
+  
   addTab(tab:Tab){
     if (this.tabs.length === 0) {
       tab.isActive = true;
@@ -30,6 +40,17 @@ export class TabsComponent implements OnInit {
     }
     tab.isActive = true;
   }
+
+  ngAfterContentInit(): void {
+    if(this.tab){
+      console.log(this.tab);
+      this.addTab(this.tab);
+      this.tabClickSubscription = this.tab.onClick.subscribe(()=>{console.log("Click detectado");
+      });
+    }
+  }
+
+
   
 
 }

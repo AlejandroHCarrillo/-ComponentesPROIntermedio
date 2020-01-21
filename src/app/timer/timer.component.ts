@@ -20,6 +20,7 @@ export class TimerComponent implements OnInit, OnDestroy {
 
   // private countdownTimerRef:any = null;
   // public paused: boolean = true;
+  public progress: number = 0;
 
   constructor(public timer:TimerService, private cdRef: ChangeDetectorRef) { }
 
@@ -29,10 +30,12 @@ export class TimerComponent implements OnInit, OnDestroy {
       console.log("--Se acabo--");
       this.onComplete.emit();
     })
+
     this.countdownSubcription = this.timer.countdown$
     .subscribe((data)=>{ 
       this.countdown = data; 
       this.cdRef.markForCheck();
+      this.progress = 100 * (this.init - this.countdown) / (this.init);
     });
   }
 
