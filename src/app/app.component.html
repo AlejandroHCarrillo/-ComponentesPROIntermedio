@@ -27,16 +27,13 @@
 
     </app-alert-view>
 
-    <app-alert-view [hidden]="!isEndTimerAlertVisible">
-        <div header>
-            La cuenta ha terminado
-        </div>
-
+    <!-- <app-alert-view [hidden]="!isEndTimerAlertVisible">
+        <div header>La cuenta ha terminado</div>
         <div>Cuenta terminada JA JA JA!!!</div>
-
         <button (click)="hideEndTimerAlert()">Ok</button>
+    </app-alert-view> -->
 
-    </app-alert-view>
+    <app-simple-alert-view title="Tiempo terminado" message="La cuenta regresiva ha terminado. BOOOM!!!"></app-simple-alert-view>
 
     <app-simple-alert-view></app-simple-alert-view>
 
