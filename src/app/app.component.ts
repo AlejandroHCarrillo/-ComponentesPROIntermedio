@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ViewChildren, QueryList, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ViewChildren, QueryList, ChangeDetectorRef, ElementRef, Renderer2 } from '@angular/core';
 import { SimpleAlertViewComponent } from './simple-alert-view/simple-alert-view.component';
 
 @Component({
@@ -15,15 +15,15 @@ export class AppComponent implements AfterViewInit {
   @ViewChildren(SimpleAlertViewComponent) alerts: QueryList<SimpleAlertViewComponent>;
   @ViewChild("timerInput") timeInput: ElementRef;
 
-  constructor(private cdRef:ChangeDetectorRef) {
+  constructor(private cdRef:ChangeDetectorRef, private renderer: Renderer2 ) {
     this.timers = [3, 20, 185];
   }
 
    ngAfterViewInit(): void {
     console.log(this.timeInput);
 
-    this.timeInput.nativeElement.setAttribute("placeholder", "Ingrese los segundos");
-    this.timeInput.nativeElement.classList.add("time-in");
+    this.renderer.setAttribute( this.timeInput.nativeElement, "placeholder", "Ingrese los segundos");
+    this.renderer.addClass( this.timeInput.nativeElement, "time-in");
     
     this.alerts.forEach( item => { 
       if(!item.title){
@@ -38,7 +38,7 @@ export class AppComponent implements AfterViewInit {
   showAddTimer(){
     this.isAddTimerVisible = true;
     setTimeout(()=>{
-      this.timeInput.nativeElement.focus();
+      this.renderer.selectRootElement( this.timeInput.nativeElement).focus();
     })
     console.log("Mostrar");
   }
