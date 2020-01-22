@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ViewChildren, QueryList, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { SimpleAlertViewComponent } from './simple-alert-view/simple-alert-view.component';
 
 @Component({
@@ -9,33 +9,37 @@ import { SimpleAlertViewComponent } from './simple-alert-view/simple-alert-view.
 export class AppComponent implements AfterViewInit {
 
   public isAddTimerVisible: boolean = false;
-  // public isEndTimerAlertVisible: boolean = false;
   public time:number = 0;
   public timers:Array<number> = [];
 
-  // @ViewChild(SimpleAlertViewComponent) alert: SimpleAlertViewComponent;
   @ViewChildren(SimpleAlertViewComponent) alerts: QueryList<SimpleAlertViewComponent>;
+  @ViewChild("timerInput") timeInput: ElementRef;
 
   constructor(private cdRef:ChangeDetectorRef) {
     this.timers = [3, 20, 185];
   }
 
    ngAfterViewInit(): void {
+    console.log(this.timeInput);
+
+    this.timeInput.nativeElement.setAttribute("placeholder", "Ingrese los segundos");
+    this.timeInput.nativeElement.classList.add("time-in");
+    
     this.alerts.forEach( item => { 
       if(!item.title){
         item.title = "aqui va el titulo";
         item.message = "aqui va el mensaje";
       }
-    console.log(item);
-    // this.alert.show();
-    // this.alert.title = "aqui va el titulo";
-    // this.alert.message = "aqui va el mensaje";
+      console.log(item);
     });
     this.cdRef.detectChanges();
   }
 
   showAddTimer(){
     this.isAddTimerVisible = true;
+    setTimeout(()=>{
+      this.timeInput.nativeElement.focus();
+    })
     console.log("Mostrar");
   }
   
@@ -45,14 +49,11 @@ export class AppComponent implements AfterViewInit {
   }
 
   showEndTimerAlert(){
-    // this.isEndTimerAlertVisible = true;
-    // TODO: motrar de algun modo la alerta
     this.alerts.first.show();
     console.log("showEndTimerAlert");
   }
   
   hideEndTimerAlert(){
-    // this.isEndTimerAlertVisible = false;
     console.log("hiddeEndTimerAlert");
   }
 
@@ -61,11 +62,9 @@ export class AppComponent implements AfterViewInit {
     
   }
 
-  public submitAddTimer(){
+  submitAddTimer(){
     this.timers.push(this.time);
     this.hideAddTimer();
   }
-
-  
 
 }
