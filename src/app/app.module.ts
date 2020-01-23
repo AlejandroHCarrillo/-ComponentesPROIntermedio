@@ -31,6 +31,9 @@ import { SimpleAlertViewComponent } from './simple-alert-view/simple-alert-view.
     HttpModule
   ],
   providers: [],
+  entryComponents:[ 
+    SimpleAlertViewComponent 
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

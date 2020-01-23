@@ -12,8 +12,6 @@
         </app-tab>
     </app-tabs>
 
-
-
     <app-alert-view [hidden]="!isAddTimerVisible">
         <div header>
             Agregar timer
@@ -27,16 +25,6 @@
 
     </app-alert-view>
 
-    <ng-template #timeEndTemplate let-message let-title="title">
-        <app-simple-alert-view [title]="title" [message]="message">
-        </app-simple-alert-view>
-    </ng-template>
-
-    <ng-container [ngTemplateOutlet]="timeEndTemplate" [ngTemplateOutletContext]="{ title: 'Game over', $implicit:'Boom!!!' }"></ng-container>
-    <ng-container [ngTemplateOutlet]="timeEndTemplate" [ngTemplateOutletContext]="{ title: 'Ya valio.', $implicit:'La cuenta regresiva ha terminado. BOOOM!!!' }"></ng-container>
-    <ng-container [ngTemplateOutlet]="timeEndTemplate"></ng-container>
-    <ng-container [ngTemplateOutlet]="timeEndTemplate"></ng-container>
-
-
+    <ng-container #alert></ng-container>
 
 </div>
