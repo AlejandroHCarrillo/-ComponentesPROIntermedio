@@ -27,15 +27,16 @@
 
     </app-alert-view>
 
-    <!-- <app-alert-view [hidden]="!isEndTimerAlertVisible">
-        <div header>La cuenta ha terminado</div>
-        <div>Cuenta terminada JA JA JA!!!</div>
-        <button (click)="hideEndTimerAlert()">Ok</button>
-    </app-alert-view> -->
+    <ng-template #timeEndTemplate let-message let-title="title">
+        <app-simple-alert-view [title]="title" [message]="message">
+        </app-simple-alert-view>
+    </ng-template>
 
-    <app-simple-alert-view title="Tiempo terminado" message="La cuenta regresiva ha terminado. BOOOM!!!"></app-simple-alert-view>
+    <ng-container [ngTemplateOutlet]="timeEndTemplate" [ngTemplateOutletContext]="{ title: 'Game over', $implicit:'Boom!!!' }"></ng-container>
+    <ng-container [ngTemplateOutlet]="timeEndTemplate" [ngTemplateOutletContext]="{ title: 'Ya valio.', $implicit:'La cuenta regresiva ha terminado. BOOOM!!!' }"></ng-container>
+    <ng-container [ngTemplateOutlet]="timeEndTemplate"></ng-container>
+    <ng-container [ngTemplateOutlet]="timeEndTemplate"></ng-container>
 
-    <app-simple-alert-view></app-simple-alert-view>
 
 
 </div>
